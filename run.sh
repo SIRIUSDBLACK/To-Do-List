@@ -1,0 +1,1 @@
+sh npx tailwindcss -i ./src/input.css -o ./src/app.css --watch
