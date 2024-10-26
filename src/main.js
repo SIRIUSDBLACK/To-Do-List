@@ -1,9 +1,11 @@
 //selector
 const textInput = document.querySelector("#textInput");
 const textInputBtn = document.querySelector("#textInputBtn");
-const listGroup = document.querySelector("#listGroup")
+const listGroup = document.querySelector("#listGroup");
+const totalTask  = document.querySelector("#totalTask");
+const DoneTask   = document.querySelector("#doneTask");
 
-
+let textCount = 0;
 
 
 //process
@@ -11,15 +13,26 @@ const addList = () => {
     console.log(textInput.value);
     listGroup.append(createNewList(textInput.value));
     textInput.value = null;
+    updateTaskTotal();
+}
+const updateTaskTotal = () => {
+    //count list and update
+    const newLists = document.querySelectorAll(".list") 
+    totalTask.innerText = newLists.length;
+}
+const updateDoneTaskTotal = () => {
+    //count list and update
+    const newLists = document.querySelectorAll(".list input:checked") 
+    DoneTask.innerText = newLists.length;
 }
 
 const createNewList = (taskTitle) => {
     const list = document.createElement("div");
-    list.classList.add("list",);
+    list.classList.add("list","duration-200");
     list.innerHTML = ` <div class="border mb-2 px-2 py-2 flex items-center justify-between border-stone-900">
                 <div class="flex gap-2">
-                    <input type="checkbox" class="accent-stone-700">
-                    <p class="font-mono">${taskTitle}</p>
+                    <input type="checkbox" class="checkDone accent-stone-700">
+                    <p class="listTask font-mono">${taskTitle}</p>
                 </div>
                 <div class="flex gap-1">
                     <button class="border-2 size-8 flex items-center justify-center p-1 text-sm border-stone-900"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -33,9 +46,22 @@ const createNewList = (taskTitle) => {
                       </button>
                 </div>
             </div>`;
-
-    return list;        
+            // textCount++;
+            // totalTask.innerText   = textCount;     u can use this way to make the count too
+            // console.log(textCount);
+            
+            const checkDone = list.querySelector(".checkDone");  
+            const listTask = list.querySelector(".listTask")
+            checkDone.addEventListener("change",() => {
+                updateDoneTaskTotal();
+                listTask.classList.toggle("line-through");
+                list.classList.toggle("opacity-20");
+                list.classList.toggle("scale-90");
+            })
+            return list; 
     
+
+
 }
 
 
